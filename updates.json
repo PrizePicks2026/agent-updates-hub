@@ -1,1 +1,22 @@
-{"cats":["Account & Verification","Payments","Sports & Scoring","Promotions"],"posts":[]}
+{
+  "cats": [
+    "Account & Verification",
+    "Payments",
+    "Sports & Scoring",
+    "Promotions"
+  ],
+  "posts": [
+    {
+      "id": 1794655323288,
+      "t": "Annual Verification for Teams/Culture Picks",
+      "c": "Account & Verification",
+      "d": "2026-11-14",
+      "v": "1.0",
+      "p": "IMPORTANT",
+      "l": "NEW",
+      "by": "Operations",
+      "b": "Hey Team! 👋\n\nWe've officially hit one year of Predictions on PrizePicks! 🎉 With this milestone, some members will now need to complete their annual verification to continue participating in Teams/Culture Picks.\n\nHere's a quick refresher on what to look out for and how to assist members!\n\n🔍 How to Identify Members Who Need Verification\n\nKeep an eye on the member's Predict Verification status. If you see a gray status displaying \"Needs Annual Verification,\" it means the member needs to complete their annual verification.\n\n✅ What Should We Tell Members?\n\nThe good news is that the process is super simple! Just guide the member through these steps:\n\n1. Select a Team Pick.\n2. Click \"Verify Information.\"\n3. Follow the prompts to complete the verification.\n\n⚠️ A Few Important Things to Remember:\n\n-This process must be completed by the member on their end.\n- We cannot manually initiate or complete the annual verification for them.\n- Predict Passed and Predict Failed statuses will continue to be handled as usual. No changes there!\n\nThat's everything, team! Please keep this in mind when assisting members who encounter the \"Needs Annual Verification\" status and make sure we're pointing them in the right direction.\n\nIf you have any questions, don't hesitate to reach out!",
+      "h": []
+    }
+  ]
+}
