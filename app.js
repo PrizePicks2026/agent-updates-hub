@@ -1,5 +1,5 @@
 (function(){
-var DATA={cats:[],posts:[]},q='',cat='',dt='';
+var DATA={cats:[],posts:[]},q='',cat='',dt='',so='new';
 var $=function(i){return document.getElementById(i)};
 function esc(x){var d=document.createElement('div');d.textContent=x;return d.innerHTML}
 function days(p){return Math.floor((new Date()-new Date(p.d+'T00:00:00'))/864e5)}
@@ -24,12 +24,12 @@ function stats(){var n=DATA.posts.filter(function(p){return days(p)<=7&&(p.l=='N
 $('stats').innerHTML=[[n,'New / Updated'],[DATA.posts.length,'Total posts']].map(function(x){return '<div class="panel stat"><b>'+String(x[0]).padStart(2,'0')+'</b><span>'+x[1]+'</span></div>'}).join('')}
 function build(){
 var cs=DATA.cats.slice();DATA.posts.forEach(function(p){if(cs.indexOf(p.c)<0)cs.push(p.c)});
-$('view').innerHTML='<div class="tools"><input id="q" placeholder="Search policies, announcements, or processes..."><select id="cat"><option value="">All categories</option>'+cs.map(function(c){return '<option>'+esc(c)+'</option>'}).join('')+'</select><select id="dt"><option value="">All dates</option><option value="0">Today</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></div><div id="list"></div>';
-$('q').oninput=function(e){q=e.target.value;list()};$('cat').onchange=function(e){cat=e.target.value;list()};$('dt').onchange=function(e){dt=e.target.value;list()}}
+$('view').innerHTML='<div class="tools"><input id="q" placeholder="Search policies, announcements, or processes..."><select id="cat"><option value="">All categories</option>'+cs.map(function(c){return '<option>'+esc(c)+'</option>'}).join('')+'</select><select id="dt"><option value="">All dates</option><option value="0">Today</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select><select id="so"><option value="new">Sort: Critical first, then newest</option><option value="old">Sort: Oldest first</option><option value="az">Sort: Title A–Z</option><option value="cat">Sort: Category</option></select></div><div id="list"></div>';
+$('q').oninput=function(e){q=e.target.value;list()};$('cat').onchange=function(e){cat=e.target.value;list()};$('dt').onchange=function(e){dt=e.target.value;list()};$('so').onchange=function(e){so=e.target.value;list()}}
 function list(){
 var r=DATA.posts.filter(function(p){var s=(p.t+p.b+p.c).toLowerCase();return(!q||s.indexOf(q.toLowerCase())>-1)&&(!cat||p.c==cat)&&(dt===''||days(p)<=+dt)});
-r.sort(function(a,b){return(b.p=='CRITICAL')-(a.p=='CRITICAL')||b.d.localeCompare(a.d)});
-$('list').innerHTML='<div class="meta" style="margin-bottom:8px">'+r.length+' results · Critical updates pinned first · Always follow the latest version</div>'+(r.map(card).join('')||'<div class="panel">'+(DATA.posts.length?'No matching announcements.':'No updates have been published yet.')+'</div>');
+r.sort(function(a,b){var n=b.d.localeCompare(a.d)||b.id-a.id;if(so=='old')return -n;if(so=='az')return a.t.localeCompare(b.t);if(so=='cat')return a.c.localeCompare(b.c)||n;return(b.p=='CRITICAL')-(a.p=='CRITICAL')||n});
+$('list').innerHTML='<div class="meta" style="margin-bottom:8px">'+r.length+' results'+(so=='new'?' · Critical updates pinned first':'')+' · Always follow the latest version</div>'+(r.map(card).join('')||'<div class="panel">'+(DATA.posts.length?'No matching announcements.':'No updates have been published yet.')+'</div>');
 document.querySelectorAll('#list .card').forEach(function(c){var b=c.querySelector('button');if(b)b.onclick=function(){c.querySelector('.drawer').classList.toggle('hide')}});document.querySelectorAll('.pi').forEach(function(im){im.onclick=function(){var o=document.createElement('div');o.className='lb';o.innerHTML='<img src="'+im.src+'" alt="">';o.onclick=function(){o.remove()};document.body.appendChild(o)}})}
 fetch('updates.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){DATA={cats:j.cats||[],posts:j.posts||[]};stats();build();list()}).catch(function(){$('view').innerHTML='<div class="panel">Could not load updates. If you opened this file straight from your computer, host the site (for example on GitHub Pages) or use a local web server, because browsers block loading updates.json from a local file.</div>'});
 (function(){var s='INTERNAL ONLY · NOT FOR MEMBERS      ',l='';for(var i=0;i<18;i++)l+=s.repeat(5)+'\n';var w=document.createElement('div');w.className='wm';w.textContent=l;document.body.appendChild(w)})();

@@ -17,7 +17,7 @@ nav button.on,.btn.pri{background:linear-gradient(135deg,#7c3aed,#a855f7);border
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
 .panel{background:linear-gradient(160deg,#2e1065 0%,#1d0f40 55%,#140a2e 100%);border:1px solid #8b5cf6;border-radius:14px;box-shadow:0 0 18px #7c3aed66,0 0 2px #c084fc,inset 0 1px 0 #ffffff22;padding:16px;transition:box-shadow .2s}.panel.card{border-left:4px solid var(--glow)}.panel:hover{box-shadow:0 0 28px #a855f7aa,0 0 2px #e9d5ff,inset 0 1px 0 #ffffff33}
 .stat b{display:block;font-size:34px;color:var(--hi)}.stat span{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
-.tools{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.tools{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin-bottom:12px}
 @media(max-width:640px){.tools{grid-template-columns:1fr}}
 input,select,textarea{width:100%;background:#1d0f40;color:var(--tx);border:1px solid #8b5cf6;border-radius:8px;padding:10px;font:inherit}
 textarea{min-height:80px}
