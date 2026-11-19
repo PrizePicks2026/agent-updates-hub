@@ -9,11 +9,17 @@ function clean(t){return esc(t.split('**').join(''))}
 function wdiff(a,b){var x=a.split(/\s+/).filter(Boolean),y=b.split(/\s+/).filter(Boolean),m=x.length,n=y.length,L=[],i,j;for(i=0;i<=m;i++){L.push(new Array(n+1).fill(0))}for(i=m-1;i>=0;i--)for(j=n-1;j>=0;j--)L[i][j]=x[i]==y[j]?L[i+1][j+1]+1:Math.max(L[i+1][j],L[i][j+1]);var o='',w='';i=0;j=0;while(i<m&&j<n){if(x[i]==y[j]){o+=clean(x[i])+' ';w+=clean(y[j])+' ';i++;j++}else if(L[i+1][j]>=L[i][j+1]){o+='<del>'+clean(x[i])+'</del> ';i++}else{w+='<ins>'+clean(y[j])+'</ins> ';j++}}while(i<m){o+='<del>'+clean(x[i++])+'</del> '}while(j<n){w+='<ins>'+clean(y[j++])+'</ins> '}return [o,w]}
 function gal(p){return p.img&&p.img.length?'<div class="gal">'+p.img.map(function(s){return '<img class="pi" src="'+s+'" alt="Update photo">'}).join('')+'</div>':''}
 function label(p){return days(p)<=7?p.l:'ACTIVE'}
+var STOP='a an the of for to and or in on at is are with by'.split(' ');
+function words(t){return t.toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(/\s+/).filter(function(w){return w&&STOP.indexOf(w)<0})}
+function sim(a,b){var x=words(a),y=words(b);if(!x.length||!y.length)return 0;var i=x.filter(function(w){return y.indexOf(w)>-1}).length;return i/(x.length+y.length-i)}
+function prevOf(p){
+if(p.rep){var r=DATA.posts.filter(function(q){return q.id==p.rep})[0];if(r)return r}
+var best=null,bs=0;DATA.posts.forEach(function(q){if(q.id>=p.id||q.c!=p.c)return;var s=sim(p.t,q.t);if(s>=0.5&&(s>bs||(s==bs&&best&&q.id>best.id))){best=q;bs=s}});return best}
+function sup(p){return DATA.posts.some(function(q){return q.rep==p.id})}
 function card(p){
-var hh=(p.h||[]).slice().reverse();
-var hist=hh.map(function(x,k){var d=wdiff(x.o,x.n);return '<div style="margin-bottom:12px"><b>'+(k==0?'Latest change – follow the new version (v'+esc(p.v)+')':'Earlier change')+'</b><div class="diff"><div class="old"><b>Previous (v'+esc(x.v)+')</b><br>'+d[0]+'</div><div class="new"><b>New</b><br>'+d[1]+'</div></div>'+(x.ph?'<div class="meta" style="margin-top:6px">📷 Photos were added or changed in this version.</div>':'')+'</div>'}).join('');
-var tags='<div class="tags">'+[label(p),p.p].filter(Boolean).map(function(x){return '<span class="tag '+esc(x)+'">'+esc(x)+'</span>'}).join('')+'</div>';
-return '<div class="panel card">'+tags+'<h3>'+esc(p.t)+'</h3><div class="meta">'+esc(p.c)+' · '+fmt(p.d)+' · Version '+esc(p.v)+' · Posted by '+esc(p.by)+'</div><p>'+bold(p.b)+'</p>'+gal(p)+(hh.length?'<div class="row"><button class="btn pri">What changed?</button></div><div class="drawer hide">'+hist+'</div>':'')+'</div>'}
+var pv=prevOf(p),d=pv?wdiff(pv.b,p.b):null;
+var tags='<div class="tags">'+[label(p),p.p].filter(Boolean).map(function(x){return '<span class="tag '+esc(x)+'">'+esc(x)+'</span>'}).join('')+(sup(p)?'<span class="tag SUPERSEDED">REPLACED BY A NEWER UPDATE</span>':'')+'</div>';
+return '<div class="panel card">'+tags+'<h3>'+esc(p.t)+'</h3><div class="meta">'+esc(p.c)+' · '+fmt(p.d)+' · Version '+esc(p.v)+' · Posted by '+esc(p.by)+'</div><p>'+bold(p.b)+'</p>'+gal(p)+(pv?'<div class="row"><button class="btn pri">What changed?</button></div><div class="drawer hide"><b>Compared with the earlier update “'+esc(pv.t)+'” ('+fmt(pv.d)+') – follow this newer update</b><div class="diff"><div class="old"><b>Earlier update</b><br>'+d[0]+'</div><div class="new"><b>This update</b><br>'+d[1]+'</div></div></div>':'')+'</div>'}
 function stats(){var n=DATA.posts.filter(function(p){return days(p)<=7&&(p.l=='NEW'||p.l=='UPDATED')}).length;
 $('stats').innerHTML=[[n,'New / Updated'],[DATA.posts.length,'Total posts']].map(function(x){return '<div class="panel stat"><b>'+String(x[0]).padStart(2,'0')+'</b><span>'+x[1]+'</span></div>'}).join('')}
 function build(){
