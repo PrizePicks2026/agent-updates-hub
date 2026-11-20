@@ -50,3 +50,7 @@ footer{text-align:center;color:var(--mu);font-size:12px;margin:24px 0}
 .details>.gal .pi:first-child{margin-left:auto}.details>.gal .pi:last-child{margin-right:auto}
 @media(max-width:640px){.details>.gal .pi{height:200px}}
 .head{cursor:pointer}.head:hover h3{color:var(--hi)}.trow{display:flex;justify-content:space-between;align-items:center;gap:10px}.chev{color:var(--hi);font-size:18px;transition:transform .2s}.card.open .chev{transform:rotate(180deg)}.details{margin-top:10px;border-top:1px solid #4c1d95;padding-top:12px}
+.lbn{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid var(--glow);background:#000a;color:#fff;font-size:30px;line-height:1;cursor:pointer;box-shadow:0 0 14px #7c3aed99}
+.lbp{left:14px}.lbx{right:14px}.lbn:hover{background:var(--glow)}
+.lbk{position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--glow);background:#000a;color:#fff;font-size:16px;cursor:pointer}
+.lbc{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);color:#fff;background:#000a;padding:3px 12px;border-radius:99px;font-size:13px}
