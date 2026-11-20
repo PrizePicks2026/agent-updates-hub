@@ -43,3 +43,9 @@ footer{text-align:center;color:var(--mu);font-size:12px;margin:24px 0}
 .gal{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.pi{width:130px;height:130px;object-fit:cover;border-radius:10px;border:1px solid var(--glow);box-shadow:0 0 12px #7c3aed66;cursor:zoom-in}.lb{position:fixed;inset:0;background:#000e;z-index:4;display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}.lb img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 0 30px #7c3aed}
 .SUPERSEDED{background:#3f3f46;color:#fecdd3;border-color:#71717a}
 .card>.gal{justify-content:center;margin:0 0 12px}
+
+.card>.gal{display:flex;flex-wrap:nowrap;justify-content:flex-start;gap:10px;overflow-x:auto;margin:0 0 12px;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:#8b5cf6 transparent}
+.card>.gal::-webkit-scrollbar{height:8px}.card>.gal::-webkit-scrollbar-thumb{background:#8b5cf6;border-radius:8px}.card>.gal::-webkit-scrollbar-track{background:transparent}
+.card>.gal .pi{height:280px;width:auto;max-width:100%;flex:0 0 auto;object-fit:cover}
+.card>.gal .pi:first-child{margin-left:auto}.card>.gal .pi:last-child{margin-right:auto}
+@media(max-width:640px){.card>.gal .pi{height:200px}}
